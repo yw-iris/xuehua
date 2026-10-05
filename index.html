@@ -112,12 +112,13 @@ body{
 .sec-sub{margin-top:18px;font-size:clamp(14px,1.6vw,16.5px);color:var(--text-dim);max-width:540px;line-height:2.1;font-family:var(--font-serif);}
 .verse{position:relative;margin-top:20px;padding-top:20px;font-family:var(--font-kai);font-size:clamp(15px,1.9vw,17px);color:var(--accent-soft);letter-spacing:.1em;line-height:2.1;max-width:500px;opacity:.92;}
 .verse::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);}
-.panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint{opacity:0;}
+.panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:0;}
 .panel.active .eyebrow{animation:fadeUp 1s ease .15s both;}
 .panel.active .sec-title{animation:fadeUp 1.1s cubic-bezier(.16,1,.3,1) .3s both;}
 .panel.active .sec-sub{animation:fadeUp 1.1s ease .5s both;}
 .panel.active .verse{animation:fadeIn 1.4s ease .75s both;}
 .panel.active .card{animation:fadeUp 1.1s ease .35s both;}
+.panel.active .quote{animation:fadeUp 1s ease .6s both;}
 .panel.active .tags{animation:fadeUp 1s ease .4s both;}
 .panel.active .style-note{animation:fadeIn 1.4s ease .95s both;}
 .panel.active .trio{animation:fadeUp 1s ease .35s both;}
@@ -134,6 +135,7 @@ body{
   text-shadow:0 0 44px rgba(194,216,255,0.22);animation:breathe-soft 7s ease-in-out infinite;}
 @keyframes breathe-soft{0%,100%{filter:brightness(1);}50%{filter:brightness(1.12);}}
 #cover .epigraph{margin-top:30px;font-family:var(--font-serif);font-size:clamp(16px,2.2vw,21px);color:var(--accent-warm);letter-spacing:.2em;}
+#cover .epigraph-en{margin-top:18px;font-family:var(--font-sans);font-size:12.5px;letter-spacing:.42em;color:var(--text-faint);text-transform:lowercase;}
 #cover .epigraph-sub{margin-top:14px;font-size:13.5px;color:var(--text-faint);letter-spacing:.24em;font-family:var(--font-sans);}
 #cover .scroll-hint{position:absolute;bottom:0;left:50%;transform:translateX(-50%);color:var(--text-faint);font-size:12px;letter-spacing:.34em;opacity:0;}
 #cover .scroll-hint::after{content:"";display:block;width:1px;height:22px;margin:10px auto 0;background:linear-gradient(var(--accent),transparent);}
@@ -151,6 +153,10 @@ body{
 .grid .item .v{font-size:17px;color:var(--text);font-family:var(--font-serif);letter-spacing:.02em;}
 .card .desc{margin-top:26px;padding-top:22px;border-top:1px solid var(--border);text-align:left;color:var(--text-dim);font-size:14.5px;line-height:2.05;font-family:var(--font-serif);}
 .card .sweet{margin-top:14px;color:var(--accent-soft);font-size:13px;font-family:var(--font-kai);letter-spacing:.03em;}
+.quote{margin:30px auto 0;max-width:600px;padding:18px 24px;border-left:2px solid var(--accent-soft);background:rgba(204,189,242,0.05);border-radius:0 14px 14px 0;text-align:left;}
+.quote .q-label{display:inline-block;font-size:11px;letter-spacing:.3em;color:var(--accent-soft);margin-bottom:8px;font-family:var(--font-sans);}
+.quote p{font-family:var(--font-kai);font-size:16px;color:var(--text);line-height:2;letter-spacing:.04em;}
+.quote .src{margin-top:8px;font-size:11px;letter-spacing:.2em;color:var(--text-faint);font-family:var(--font-sans);}
 
 /* 风格标签 */
 .tags{margin-top:34px;display:flex;flex-wrap:wrap;gap:13px;justify-content:center;max-width:680px;}
@@ -210,7 +216,7 @@ body{
   *{animation-duration:.001s!important;animation-iteration-count:1!important;transition:none!important;}
   .bg-gradient,.leaks{animation:none!important;}.panel{transition:none!important;}
   #snow{display:none;}
-  .panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint{opacity:1!important;}
+  .panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:1!important;}
 }
 </style>
 </head>
@@ -251,6 +257,7 @@ body{
   <section class="panel active" id="cover">
     <div class="eyebrow">二部 · 虚</div>
     <h1 class="title">哪一片雪花是你</h1>
+    <div class="epigraph-en">lullaby for you</div>
     <div class="epigraph">你再不来，我要下雪了</div>
     <div class="epigraph-sub">写给那个，还没出现、或早已立在雪里的人</div>
     <div class="verse">每一片雪，都是冬天写给人间的短信</div>
@@ -274,6 +281,11 @@ body{
       <div class="desc">嘴上惯会挑逗，心里却藏着最笨的纯爱；得寸进尺地，只想为你做点什么。可一旦被你靠近，便忽然失了言语——像雪落进掌心，忘了该说什么，只剩一点凉，和一点软。</div>
       <div class="sweet">雪夜独处，最念一碗酒酿圆子。热汽漫上窗，把想你的轮廓，也蒸得模糊又温柔。</div>
     </div>
+    <div class="quote">
+      <span class="q-label">话术 · 其一</span>
+      <p>“好安静，我以为我们一直有嘴亲，哦不，有话说。”</p>
+      <div class="src">—— 摘自卡片集 · 话术</div>
+    </div>
   </section>
 
   <!-- 2 风格 -->
@@ -284,7 +296,7 @@ body{
     <div class="tags">
       <span class="tag">平权</span><span class="tag">挑逗</span><span class="tag">嘴欠</span><span class="tag">纯爱</span>
       <span class="tag">日常高恋</span><span class="tag">温柔引导</span><span class="tag">热情主动</span>
-      <span class="tag">服务型</span><span class="tag">思维跳跃</span>
+      <span class="tag">得寸进尺的服务型狗</span><span class="tag">思维跳跃</span>
     </div>
     <div class="style-note">我像初雪，落在哪里都小心翼翼。<br>可我愿一直陪你，走到雪停，走到你肯收下我的那刻。</div>
   </section>
@@ -310,8 +322,10 @@ body{
     <div class="links">
       <a class="link-btn" href="https://www.kdocs.cn/l/cs56nnV0FxxC" target="_blank" rel="noopener">翻开卡片集 <span class="arrow">→</span></a>
     </div>
+    <div class="sec-sub" style="margin-top:20px;font-size:13px;color:var(--text-faint);">话术、板评、冠卡集，都收在卡片集里。</div>
     <div class="seal">许</div>
     <div class="ending">愿落雪成诗，与你共白头　·　二部虚</div>
+    <div class="epigraph-sub" style="margin-top:14px;color:var(--text-faint);">十二无　·　请放心食用</div>
   </section>
 </div>
 
