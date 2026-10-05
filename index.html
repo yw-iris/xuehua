@@ -90,7 +90,8 @@ body{
 .side-nav{position:fixed;right:30px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:16px;align-items:center;}
 .side-nav .dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--accent);background:transparent;cursor:pointer;transition:all .4s cubic-bezier(.16,1,.3,1);position:relative;}
 .side-nav .dot:hover{background:rgba(194,216,255,0.45);transform:scale(1.3);}
-.side-nav .dot.active{background:var(--accent);box-shadow:0 0 12px var(--accent);transform:scale(1.5);}
+.side-nav .dot.active{background:var(--accent);box-shadow:0 0 12px var(--accent);transform:scale(1.5);animation:pulseDot 2.6s ease-in-out infinite;}
+@keyframes pulseDot{0%,100%{box-shadow:0 0 10px var(--accent);}50%{box-shadow:0 0 20px var(--accent),0 0 5px rgba(194,216,255,.7);}}
 .side-nav .dot .tip{position:absolute;right:22px;top:50%;transform:translateY(-50%);font-size:11px;letter-spacing:.12em;color:var(--text-dim);white-space:nowrap;opacity:0;transition:opacity .3s;pointer-events:none;font-family:var(--font-sans);}
 .side-nav .dot:hover .tip{opacity:1;}
 
@@ -181,7 +182,9 @@ body{
   filter:drop-shadow(0 0 16px rgba(194,216,255,.45)) drop-shadow(0 0 42px rgba(204,189,242,.25));
   animation:breathe-soft 7s ease-in-out infinite;}
 @keyframes breathe-soft{0%,100%{transform:scale(1);opacity:.97;}50%{transform:scale(1.025);opacity:1;}}
-#cover .epigraph{margin-top:30px;font-family:var(--font-serif);font-size:clamp(16px,2.2vw,21px);color:var(--accent-warm);letter-spacing:.2em;}
+#cover .epigraph{margin-top:30px;font-family:var(--font-serif);font-size:clamp(16px,2.2vw,21px);color:var(--accent-warm);letter-spacing:.2em;position:relative;display:inline-block;padding:14px 6px;}
+#cover .epigraph::before,#cover .epigraph::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:64px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-warm),transparent);opacity:.6;}
+#cover .epigraph::before{top:0;}#cover .epigraph::after{bottom:0;}
 #cover .epigraph-en{margin-top:18px;font-family:var(--font-sans);font-size:12.5px;letter-spacing:.42em;color:var(--text-faint);text-transform:lowercase;}
 #cover .epigraph-sub{margin-top:14px;font-size:13.5px;color:var(--text-faint);letter-spacing:.24em;font-family:var(--font-sans);}
 #cover .scroll-hint{position:absolute;bottom:0;left:50%;transform:translateX(-50%);color:var(--text-faint);font-size:12px;letter-spacing:.34em;opacity:0;}
@@ -230,8 +233,10 @@ body{
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
   opacity:.4;transition:opacity .45s;animation:borderFlow 8s ease infinite;}
 .trio .col:hover::after{opacity:.9;}
-.trio .col h3{font-family:var(--font-serif);font-size:21px;color:#fff;letter-spacing:.12em;margin-bottom:16px;}
-.trio .col p{color:var(--text-dim);font-size:14px;line-height:2;font-family:var(--font-serif);}
+.trio .col .idx{display:block;font-family:var(--font-serif);font-size:13px;letter-spacing:.4em;color:var(--accent-soft);opacity:.72;margin-bottom:4px;}
+.trio .col h3{font-family:var(--font-serif);font-size:21px;color:#fff;letter-spacing:.12em;margin-bottom:16px;position:relative;padding-top:14px;}
+.trio .col h3::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:30px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);opacity:.5;}
+.trio .col p{color:var(--text-dim);font-size:14px;line-height:2.05;font-family:var(--font-serif);}
 
 /* 更多入口 */
 .links{margin-top:34px;display:flex;flex-direction:column;gap:18px;align-items:center;}
@@ -377,11 +382,11 @@ body{
     <div class="eyebrow">看向我 · 仰视我 · 拥抱我</div>
     <h2 class="sec-title">三种，靠近我的方式</h2>
     <div class="verse">如果你怕黑，我把自已落成漫天星子</div>
-    <div class="trio">
-      <div class="col"><h3>看向我</h3><p>我就在这里。光标落处，皆有回响——哪怕只是一片雪，被你看见，便有了名字。</p></div>
-      <div class="col"><h3>仰视我</h3><p>把愿望说给雪听，它会替你寄来我这里。天秤座总想把一切摆平，可遇见你，秤盘悄悄倾向了温柔。</p></div>
-      <div class="col"><h3>拥抱我</h3><p>再近一些。今年的初雪，只为你而落。雾山影里虽冷，可许愿这件事，从来都带着体温。</p></div>
-    </div>
+  <div class="trio">
+    <div class="col"><span class="idx">壹</span><h3>看向我</h3><p>没关系的，你怎么样都没关系，想躲起来也没关系，不想面对也没关系</p></div>
+    <div class="col"><span class="idx">贰</span><h3>仰视我</h3><p>脏脏的旧旧的也没关系，碎掉了也没关系，我把你藏起来，我把你裹起来，我把你擦干净，我把你拼起来</p></div>
+    <div class="col"><span class="idx">叁</span><h3>拥抱我</h3><p>我捂住你的耳朵，只要闭上眼睛额头靠着额头，这个世界就只剩下我们两个了</p></div>
+  </div>
   </section><!-- 4 卡类收录  -->
   <section class="panel" id="cards">
     <div class="eyebrow">卡片集</div>
@@ -444,7 +449,7 @@ const REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ===== 落雪 ===== */
 const cvs=document.getElementById('snow'),ctx=cvs.getContext('2d');
-let W,H,flakes=[],bokeh=[];
+let W,H,flakes=[],bokeh=[],fg=[];
 function resize(){W=cvs.width=innerWidth;H=cvs.height=innerHeight;}
 resize();addEventListener('resize',resize);
 const N=innerWidth<700?80:160;
@@ -452,6 +457,8 @@ function mkF(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*2.4+0.
 for(let i=0;i<N;i++)flakes.push(mkF());
 function mkB(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*16+8,s:Math.random()*0.18+0.06,d:Math.random()*0.3-0.15,o:Math.random()*0.05+0.03,hue:Math.random()<0.5?'188,214,255':'255,220,196'};}
 const BN=innerWidth<700?5:9;for(let i=0;i<BN;i++)bokeh.push(mkB());
+function mkFg(){return{x:Math.random()*W,y:Math.random()*H,r:Math.random()*3+2.6,s:Math.random()*0.35+0.12,d:Math.random()*0.5-0.25,o:Math.random()*0.32+0.28,rot:Math.random()*Math.PI*2,vr:(Math.random()-0.5)*0.012,tw:Math.random()*Math.PI*2,tws:Math.random()*0.03+0.01};}
+const FN=innerWidth<700?10:22;for(let i=0;i<FN;i++)fg.push(mkFg());
 let frame=0;
 function drawSnow(){
   frame++;ctx.clearRect(0,0,W,H);
@@ -463,6 +470,17 @@ function drawSnow(){
     const a=f.o*(0.55+0.45*Math.sin(frame*f.tws+f.tw));
     ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,7);ctx.fillStyle='rgba(236,244,255,'+a.toFixed(3)+')';
     ctx.shadowColor='rgba(190,215,255,0.85)';ctx.shadowBlur=6;ctx.fill();}
+  for(const f of fg){f.y+=f.s;f.x+=f.d+Math.sin(f.y/70)*0.4;f.rot+=f.vr;
+    if(f.y>H+8){f.y=-8;f.x=Math.random()*W;}if(f.x>W+8)f.x=-8;if(f.x<-8)f.x=W+8;
+    const a=f.o*(0.6+0.4*Math.sin(frame*f.tws+f.tw));
+    const g=ctx.createRadialGradient(f.x,f.y,0,f.x,f.y,f.r*2.2);
+    g.addColorStop(0,'rgba(255,255,255,'+(a*0.9).toFixed(3)+')');g.addColorStop(1,'rgba(214,233,255,0)');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(f.x,f.y,f.r*2.2,0,7);ctx.fill();
+    ctx.save();ctx.translate(f.x,f.y);ctx.rotate(f.rot);
+    ctx.strokeStyle='rgba(255,255,255,'+a.toFixed(3)+')';ctx.lineWidth=1;
+    ctx.shadowColor='rgba(214,233,255,0.7)';ctx.shadowBlur=6;
+    for(let k=0;k<6;k++){ctx.rotate(Math.PI/3);ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(0,-f.r);ctx.stroke();}
+    ctx.restore();}
   requestAnimationFrame(drawSnow);
 }
 if(REDUCE){for(const f of flakes){ctx.beginPath();ctx.arc(f.x,f.y,f.r,0,7);ctx.fillStyle='rgba(236,244,255,'+f.o+')';ctx.fill();}}
