@@ -147,9 +147,12 @@ body{
 
 /* ===== 卡片式翻页 ===== */
 #deck{position:fixed;inset:0;z-index:5;touch-action:pan-y;}
-.panel{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;
-  padding:14vh 9vw;overflow-y:auto;touch-action:pan-y;opacity:0;visibility:hidden;transform:translateY(26px) scale(.992);filter:blur(8px);
+.panel{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;overflow-y:auto;touch-action:pan-y;
+  padding:0;opacity:0;visibility:hidden;transform:translateY(26px) scale(.992);filter:blur(8px);
   transition:opacity .9s ease,transform .9s cubic-bezier(.16,1,.3,1),visibility .9s,filter .9s ease;}
+/* 内容矮则垂直居中，超出屏幕高度则可滚动且顶部不被裁切 */
+.panel-inner{width:100%;max-width:940px;margin:auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:14vh 9vw;box-sizing:border-box;}
 .panel.active{opacity:1;visibility:visible;transform:none;filter:blur(0);}
 .eyebrow{font-size:12.5px;letter-spacing:.55em;color:var(--accent-soft);margin-bottom:26px;font-family:var(--font-sans);
   display:inline-flex;align-items:center;gap:16px;}
@@ -271,21 +274,24 @@ body{
 
 @media(max-width:680px){
   .grid{grid-template-columns:1fr;}.trio{grid-template-columns:1fr;}
-  .side-nav{right:auto;left:50%;top:auto;bottom:78px;transform:translateX(-50%);flex-direction:row;gap:9px;max-width:92vw;}
+  .side-nav{right:auto;left:50%;top:auto;bottom:calc(80px + env(safe-area-inset-bottom));transform:translateX(-50%);flex-direction:row;gap:9px;max-width:92vw;}
   .side-nav .dot .tip{display:none;}
   .side-nav .dot{width:7px;height:7px;}
   .side-nav .dot::before{content:"";position:absolute;inset:-7px;border-radius:50%;}
   .frame{inset:10px;}
   .aurora-band{opacity:.42;}.stars{opacity:.85;}
   .card{padding:28px 22px;}
-  .panel{padding:10vh 7vw 16vh;touch-action:pan-y;}
-  .nav-ctrl{bottom:24px;gap:16px;}
+  .panel{padding:0;touch-action:pan-y;}
+  .panel-inner{padding:9vh 7vw 17vh;padding:8dvh 7vw calc(17dvh + env(safe-area-inset-bottom));}
+  .eyebrow{letter-spacing:.22em;gap:8px;font-size:11px;flex-wrap:wrap;max-width:90vw;line-height:1.6;}
+  .eyebrow::before,.eyebrow::after{width:20px;}
+  .nav-ctrl{bottom:calc(24px + env(safe-area-inset-bottom));gap:16px;}
   .chap{min-width:58px;font-size:12px;}
   .music{bottom:auto;top:14px;right:14px;}
-  .sec-title{letter-spacing:.02em;}
+  .sec-title{letter-spacing:.02em;line-height:1.5;}
 }
 @media(max-width:420px){
-  .panel{padding:8vh 6vw 17vh;}
+  .panel-inner{padding:7vh 6vw 18vh;padding:7dvh 6vw calc(18dvh + env(safe-area-inset-bottom));}
   .card{padding:24px 18px;}
   .card .name{font-size:24px;}
   .music{padding:7px 10px;gap:7px;}
@@ -356,7 +362,7 @@ body{
     <div class="epigraph">你再不来，我要下雪了</div>
     <div class="epigraph-sub">写给那个，还没出现、或早已立在雪里的人</div>
     <div class="verse">每一片雪，都是冬天写给人间的短信</div>
-    <div class="scroll-hint">滑动屏幕，或轻点圆点，翻到下一页 ›</div>
+    <div class="scroll-hint">轻点屏幕任意处，或轻点圆点，翻到下一页 ›</div>
   </section><!-- 1 档案  -->
   <section class="panel" id="profile">
     <div class="eyebrow">档案 · 许愿</div>
@@ -459,6 +465,13 @@ body{
 
 <script>
 const REDUCE=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* 将每页内容包裹进 .panel-inner：内容矮则垂直居中，超出屏幕高度则可滚动且顶部不被裁切 */
+document.querySelectorAll('.panel').forEach(p=>{
+  const inner=document.createElement('div');inner.className='panel-inner';
+  while(p.firstChild)inner.appendChild(p.firstChild);
+  p.appendChild(inner);
+});
 
 /* ===== 落雪 ===== */
 const cvs=document.getElementById('snow'),ctx=cvs.getContext('2d');
