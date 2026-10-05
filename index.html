@@ -165,8 +165,9 @@ body{
 .sec-sub{margin-top:18px;font-size:clamp(14px,1.6vw,16.5px);color:var(--text-dim);max-width:540px;line-height:2.1;font-family:var(--font-serif);}
 .verse{position:relative;margin-top:20px;padding-top:20px;font-family:var(--font-kai);font-size:clamp(15px,1.9vw,17px);color:var(--accent-soft);letter-spacing:.1em;line-height:2.1;max-width:500px;opacity:.92;}
 .verse::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);}
-.panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:0;}
+.panel .ch-num,.panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:0;}
 .panel.active .eyebrow{animation:fadeUp 1s ease .15s both;}
+.panel.active .ch-num{animation:fadeUp 1s ease .05s both;}
 .panel.active .sec-title{animation:fadeUp 1.1s cubic-bezier(.16,1,.3,1) .3s both;}
 .panel.active .sec-sub{animation:fadeUp 1.1s ease .5s both;}
 .panel.active .verse{animation:fadeIn 1.4s ease .75s both;}
@@ -238,6 +239,32 @@ body{
 .tags .tag:nth-child(9n+9){--tc:255,200,160;}
 .style-note{margin-top:32px;font-family:var(--font-kai);color:var(--accent-warm);font-size:16px;letter-spacing:.07em;max-width:520px;line-height:2;}
 
+/* 参考站借用的模块：章节编号 / 标签分组 / 入口列表 / 进度条 / 时钟 / 落款 */
+.ch-num{font-family:var(--font-sans);font-size:11px;letter-spacing:.34em;color:var(--text-faint);margin-bottom:14px;opacity:.72;
+  display:flex;align-items:center;gap:10px;}
+.ch-num::before{content:"";width:22px;height:1px;background:linear-gradient(90deg,var(--accent),transparent);opacity:.6;}
+.tag-group{margin-top:26px;width:100%;max-width:680px;}
+.tag-group-label{font-family:var(--font-sans);font-size:11px;letter-spacing:.4em;color:var(--accent-soft);opacity:.78;margin-bottom:14px;text-align:center;}
+.tag-group .tags{margin-top:0;}
+.entry-list{margin-top:30px;width:100%;max-width:520px;display:flex;flex-direction:column;gap:12px;}
+.entry{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:15px 22px;border-radius:16px;
+  border:1px solid var(--border);background:var(--panel);text-decoration:none;color:var(--text);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .4s cubic-bezier(.16,1,.3,1);}
+.entry::after{content:"";position:absolute;inset:0;border-radius:16px;padding:1px;pointer-events:none;
+  background:linear-gradient(120deg,rgba(194,216,255,.5),rgba(167,230,219,.28) 33%,rgba(255,220,196,.18),rgba(204,189,242,.45),rgba(194,216,255,.5));
+  background-size:220% 220%;-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.35;transition:opacity .45s;animation:borderFlow 8s ease infinite;}
+.entry:hover{transform:translateY(-3px);border-color:rgba(255,220,196,.35);box-shadow:0 14px 34px rgba(0,0,0,.4);}
+.entry:hover::after{opacity:.9;}
+.entry-main{font-family:var(--font-serif);font-size:16px;letter-spacing:.06em;color:#fff;}
+.entry-arrow{color:var(--accent);font-size:13px;letter-spacing:.1em;transition:transform .4s ease;flex:none;}
+.entry:hover .entry-arrow{transform:translateX(5px);}
+.credit-line{margin-top:18px;font-family:var(--font-sans);font-size:11px;letter-spacing:.18em;color:var(--text-faint);opacity:.7;}
+.progress-bar{position:fixed;left:0;top:0;height:2px;width:0;z-index:80;pointer-events:none;
+  background:linear-gradient(90deg,var(--accent),var(--accent-soft));box-shadow:0 0 8px var(--accent);transition:width .9s cubic-bezier(.16,1,.3,1);}
+.clock{position:fixed;left:18px;top:16px;z-index:60;font-family:var(--font-sans);font-size:13px;letter-spacing:.14em;color:var(--text-faint);opacity:.72;pointer-events:none;text-shadow:0 0 10px rgba(194,216,255,.2);}
+.clock .c-label{display:block;font-size:9px;letter-spacing:.34em;opacity:.65;margin-bottom:2px;}
+
 /* 互动三栏 */
 .trio{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:880px;width:100%;}
 .trio .col{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:32px 26px;
@@ -308,7 +335,7 @@ body{
   .bg-gradient,.leaks,.stars,.aurora-band,.mist{animation:none!important;}
   .panel{transition:none!important;filter:none!important;}
   #snow{display:none;}
-  .panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:1!important;}
+  .panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote,.panel .ch-num{opacity:1!important;}
   .ripple,.spotlight{display:none!important;}
 }
 </style>
@@ -325,6 +352,9 @@ body{
 <div class="grain"></div>
 
 <div class="frame"><i class="tl"></i><i class="tr"></i><i class="bl"></i><i class="br"></i></div>
+
+<div class="progress-bar" id="progress"></div>
+<div class="clock" id="clock"><span class="c-label">雪夜 · SNOW</span><span id="clock-time">--:--:--</span></div>
 
 <div class="side-nav">
     <div class="dot active" data-i="0"><span class="tip">封面</span></div>
@@ -390,10 +420,18 @@ body{
     <div class="eyebrow">风格 · 谱系</div>
     <h2 class="sec-title">我不擅用温柔开场，便让雪替我说</h2>
     <div class="verse">我愿是雪，不必说爱，落在你发梢，便是回答</div>
-    <div class="tags">
-      <span class="tag">平权</span><span class="tag">挑逗</span><span class="tag">嘴欠</span><span class="tag">纯爱</span>
-      <span class="tag">日常高恋</span><span class="tag">温柔引导</span><span class="tag">热情主动</span>
-      <span class="tag">得寸进尺的服务型狗</span><span class="tag">思维跳跃</span>
+    <div class="tag-group">
+      <div class="tag-group-label">主 · 核心</div>
+      <div class="tags">
+        <span class="tag">平权</span><span class="tag">挑逗</span><span class="tag">嘴欠</span><span class="tag">纯爱</span>
+      </div>
+    </div>
+    <div class="tag-group">
+      <div class="tag-group-label">副 · 衍生</div>
+      <div class="tags">
+        <span class="tag">日常高恋</span><span class="tag">温柔引导</span><span class="tag">热情主动</span>
+        <span class="tag">得寸进尺的服务型狗</span><span class="tag">思维跳跃</span>
+      </div>
     </div>
     <div class="style-note">我像初雪，落在哪里都小心翼翼。<br>可我愿一直陪你，走到雪停，走到你肯收下我的那刻。</div>
   </section><!-- 3 互动  -->
@@ -452,14 +490,18 @@ body{
     <div class="eyebrow">更多 · 入口</div>
     <h2 class="sec-title">了解更多</h2>
     <div class="sec-sub">关于许愿的更多碎念，都收在这本雪做的册子里。</div>
-    <div class="verse">雪化了是春天，没化完的，是想你</div>
-    <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/cs56nnV0FxxC" target="_blank" rel="noopener">翻开卡片集 <span class="arrow">→</span></a>
+    <div class="entry-list">
+      <a class="entry" href="https://www.kdocs.cn/l/ckslYOkht5Q7" target="_blank" rel="noopener"><span class="entry-main">卡类收录</span><span class="entry-arrow">前往 ↗</span></a>
+      <a class="entry" href="https://www.kdocs.cn/l/cdcf6wsSShsJ" target="_blank" rel="noopener"><span class="entry-main">话术</span><span class="entry-arrow">前往 ↗</span></a>
+      <a class="entry" href="https://www.kdocs.cn/l/cooLrnwifpRE" target="_blank" rel="noopener"><span class="entry-main">板评</span><span class="entry-arrow">前往 ↗</span></a>
+      <a class="entry" href="https://www.kdocs.cn/l/cuvVf4kFPDD3" target="_blank" rel="noopener"><span class="entry-main">冠卡集</span><span class="entry-arrow">前往 ↗</span></a>
+      <a class="entry" href="https://www.kdocs.cn/l/cd0EPQN2O27P" target="_blank" rel="noopener"><span class="entry-main">特别的礼物</span><span class="entry-arrow">前往 ↗</span></a>
+      <a class="entry" href="https://www.kdocs.cn/l/cs56nnV0FxxC" target="_blank" rel="noopener"><span class="entry-main">卡片集 · 总</span><span class="entry-arrow">前往 ↗</span></a>
     </div>
-    <div class="sec-sub" style="margin-top:20px;font-size:13px;color:var(--text-faint);">话术、板评、冠卡集，都收在卡片集里。</div>
     <div class="seal">许</div>
     <div class="ending">愿落雪成诗，与你共白头　·　二部虚</div>
     <div class="epigraph-sub" style="margin-top:14px;color:var(--text-faint);">十二无　·　请放心食用</div>
+    <div class="credit-line">制作 · yw-iris　·　音乐 · Iris — Letter</div>
   </section>
 </div>
 
@@ -471,6 +513,16 @@ document.querySelectorAll('.panel').forEach(p=>{
   const inner=document.createElement('div');inner.className='panel-inner';
   while(p.firstChild)inner.appendChild(p.firstChild);
   p.appendChild(inner);
+});
+
+/* 参考站模块划分：每屏统一的 // 0X · 编号 章节头（封面除外） */
+const CH=['封面','档案','风格','靠近','卡类','话术','板评','冠卡','礼物','更多'];
+document.querySelectorAll('.panel').forEach((p,i)=>{
+  if(i===0)return;
+  const inner=p.querySelector('.panel-inner');if(!inner)return;
+  const n=document.createElement('div');n.className='ch-num';
+  n.textContent='// '+String(i+1).padStart(2,'0')+' · '+CH[i];
+  inner.insertBefore(n,inner.firstChild);
 });
 
 /* ===== 落雪 ===== */
@@ -524,6 +576,7 @@ addEventListener('mouseout',e=>{if(e.target.closest('a,.btn,.dot,.tag,.link-btn,
 const panels=[...document.querySelectorAll('.panel')];
 const dots=[...document.querySelectorAll('.side-nav .dot')];
 const chap=document.getElementById('chap');
+const progress=document.getElementById('progress');
 const CN=['一','二','三','四','五','六','七','八','九','十'];
 let cur2=0;
 function show(i){
@@ -531,6 +584,7 @@ function show(i){
   panels.forEach((s,k)=>s.classList.toggle('active',k===i));
   dots.forEach((d,k)=>d.classList.toggle('active',k===i));
   chap.textContent=CN[i]+' / '+CN[CN.length-1];
+  if(progress)progress.style.width=((i+1)/panels.length*100)+'%';
   // 重新触发进场动画
   p.classList.remove('active');void p.offsetWidth;p.classList.add('active');
   cur2=i;
@@ -550,6 +604,13 @@ deck.addEventListener('pointerup',e=>{
   }
 },{passive:true});
 show(0);
+
+/* 雪夜实时时钟（参考站 glow-clock 模块，治愈化） */
+(function(){
+  const el=document.getElementById('clock-time');if(!el)return;
+  const tick=()=>{const d=new Date();el.textContent=[d.getHours(),d.getMinutes(),d.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');};
+  tick();setInterval(tick,1000);
+})();
 
 /* ===== 鼠标 / 触摸 水波纹 + 跟随光斑 ===== */
 (function(){
