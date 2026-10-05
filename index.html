@@ -455,26 +455,25 @@ dots.forEach(d=>d.addEventListener('click',()=>show(+d.dataset.i)));
 document.getElementById('prev').addEventListener('click',()=>show(cur2-1));
 document.getElementById('next').addEventListener('click',()=>show(cur2+1));
 addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown')show(cur2+1);if(e.key==='ArrowLeft'||e.key==='ArrowUp')show(cur2-1);});
-/* 横向滑动 / 轻点 手势（移动端友好） */
+/* 翻页：仅 轻点页面 / 上一页·下一页按钮 / 键盘方向键（移动端手指滑动不再翻页） */
 const deck=document.getElementById('deck');
-let tsX=0,tsY=0;
-deck.addEventListener('touchstart',e=>{const t=e.changedTouches[0];tsX=t.clientX;tsY=t.clientY;},{passive:true});
-deck.addEventListener('touchend',e=>{
-  const t=e.changedTouches[0];const dx=t.clientX-tsX,dy=t.clientY-tsY;
-  if(Math.abs(dx)>50 && Math.abs(dx)>Math.abs(dy)){ show(cur2+(dx<0?1:-1)); return; }
-  if(Math.abs(dx)<10 && Math.abs(dy)<10 && !e.target.closest('a')){ show(cur2+1); }
+let pX=0,pY=0,pT=0;
+deck.addEventListener('pointerdown',e=>{pX=e.clientX;pY=e.clientY;pT=Date.now();},{passive:true});
+deck.addEventListener('pointerup',e=>{
+  const dx=e.clientX-pX,dy=e.clientY-pY,dt=Date.now()-pT;
+  if(Math.hypot(dx,dy)<14 && dt<600 && !e.target.closest('a,.btn,.dot,.tag,.link-btn,.col,.navbtn,button,.music')){
+    show(cur2+1);
+  }
 },{passive:true});
 show(0);
 
-/* ===== 鼠标水波纹 + 跟随光斑 ===== */
+/* ===== 鼠标 / 触摸 水波纹 + 跟随光斑 ===== */
 (function(){
   if(REDUCE) return;
-  const coarse=window.matchMedia('(hover:none),(pointer:coarse)').matches;
-  if(coarse) return;
   const spot=document.createElement('div');spot.className='spotlight';document.body.appendChild(spot);
   let tx=innerWidth/2,ty=innerHeight/2,cx=tx,cy=ty,lastR=0;
-  addEventListener('mousemove',e=>{
-    tx=e.clientX;ty=e.clientY;spot.classList.add('on');
+  function spawn(x,y){
+    spot.classList.add('on');tx=x;ty=y;
     const now=performance.now();
     if(now-lastR<120)return;
     lastR=now;
@@ -482,10 +481,13 @@ show(0);
     const r=document.createElement('div');r.className='ripple';
     const s=62+Math.random()*46;
     r.style.width=s+'px';r.style.height=s+'px';
-    r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+    r.style.left=x+'px';r.style.top=y+'px';
     document.body.appendChild(r);
     setTimeout(()=>r.remove(),1200);
-  },{passive:true});
+  }
+  addEventListener('mousemove',e=>spawn(e.clientX,e.clientY),{passive:true});
+  addEventListener('touchstart',e=>{const t=e.touches[0];if(t)spawn(t.clientX,t.clientY);},{passive:true});
+  addEventListener('touchmove',e=>{const t=e.touches[0];if(t)spawn(t.clientX,t.clientY);},{passive:true});
   addEventListener('mouseleave',()=>spot.classList.remove('on'));
   (function sl(){cx+=(tx-cx)*0.12;cy+=(ty-cy)*0.12;
     spot.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)';
