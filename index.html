@@ -512,9 +512,14 @@ function fadeTo(v,ms){
   })();
 }
 function startAudio(){
-  if(started)return;started=true;
-  bgm.play().then(()=>fadeTo(lvl,2500)).catch(()=>{});
-  mWrap.classList.remove('show-hint');
+  if(started || !playing)return;
+  /* 进入页面立即尝试播放；若被浏览器自动播放策略拦截，
+     则保持 started=false，等待首次手势再补播（原逻辑此处会锁死） */
+  bgm.play().then(()=>{
+    started=true;
+    fadeTo(lvl,2500);
+    mWrap.classList.remove('show-hint');
+  }).catch(()=>{});
 }
 function gesture(){
   if(!started){startAudio();return;}
@@ -530,6 +535,7 @@ mBtn.addEventListener('click',e=>{
 });
 mVol.addEventListener('input',e=>{lvl=e.target.value/100;if(playing&&!bgm.paused)fadeTo(lvl,300);});
 
+startAudio();   /* 脚本就绪即尝试播放，进入网站就开始响 */
 window.addEventListener('load',()=>{try{startAudio();}catch(e){}});
 </script>
 </body>
