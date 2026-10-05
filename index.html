@@ -367,6 +367,32 @@ body{
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
   opacity:.4;transition:opacity .45s;animation:borderFlow 8s ease infinite;}
 .link-btn:hover::after{opacity:.95;}
+
+/* 卡片集 · 分栏点击展开（借参考站 MORE entry 思路，治愈化为可点开栏目） */
+.catalog-grid{margin-top:36px;width:100%;max-width:1080px;display:grid;grid-template-columns:repeat(5,1fr);gap:16px;align-items:start;}
+.catalog-grid .col{position:relative;cursor:pointer;background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:26px 16px;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);text-align:center;transition:transform .45s cubic-bezier(.16,1,.3,1),box-shadow .45s,border-color .45s,background .45s;z-index:1;}
+.catalog-grid .col::after{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(194,216,255,0.5),rgba(167,230,219,0.28) 28%,rgba(255,220,196,0.18) 52%,rgba(204,189,242,0.45),rgba(194,216,255,0.5));
+  background-size:220% 220%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.4;transition:opacity .45s;animation:borderFlow 8s ease infinite;}
+.catalog-grid .col:hover{transform:translateY(-6px);border-color:rgba(255,220,196,0.32);box-shadow:0 18px 44px rgba(0,0,0,0.4);}
+.catalog-grid .col:hover::after{opacity:.9;}
+.catalog-grid .col.open{transform:translateY(-4px);border-color:rgba(255,220,196,0.45);background:rgba(255,220,196,0.05);box-shadow:0 18px 48px rgba(0,0,0,0.45);}
+.catalog-grid .col.open::after{opacity:1;}
+.catalog-grid .col .idx{display:block;font-family:var(--font-serif);font-size:12px;letter-spacing:.4em;color:var(--accent-soft);opacity:.72;margin-bottom:6px;}
+.catalog-grid .col h3{font-family:var(--font-serif);font-size:18px;color:#fff;letter-spacing:.1em;position:relative;padding-top:14px;margin-bottom:10px;}
+.catalog-grid .col h3::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:28px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);opacity:.5;}
+.catalog-grid .col .cat-hint{font-family:var(--font-sans);font-size:11px;letter-spacing:.2em;color:var(--text-faint);opacity:.72;transition:opacity .4s;}
+.catalog-grid .col.open .cat-hint{opacity:0;}
+.catalog-grid .col .cat-detail{max-height:0;overflow:hidden;opacity:0;transition:max-height .6s cubic-bezier(.16,1,.3,1),opacity .5s ease,margin-top .5s ease;}
+.catalog-grid .col.open .cat-detail{max-height:360px;opacity:1;margin-top:16px;}
+.catalog-grid .col .cat-detail p{color:var(--text-dim);font-size:13px;line-height:1.9;font-family:var(--font-serif);margin-bottom:14px;}
+.catalog-grid .col .link-btn{font-size:13px;padding:10px 18px;}
+@media(max-width:1100px){.catalog-grid{grid-template-columns:repeat(3,1fr);max-width:680px;}}
+@media(max-width:760px){.catalog-grid{grid-template-columns:repeat(2,1fr);max-width:460px;}.catalog-grid .col{padding:22px 12px;}}
+@media(max-width:480px){.catalog-grid{grid-template-columns:1fr;max-width:340px;}}
 .seal{margin-top:38px;width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,220,196,0.4);display:flex;align-items:center;justify-content:center;
   font-family:var(--font-serif);font-size:24px;color:var(--accent-warm);background:rgba(255,220,196,0.06);letter-spacing:0;}
 .ending{margin-top:22px;color:var(--text-faint);font-family:var(--font-serif);font-size:13.5px;letter-spacing:.34em;}
@@ -434,15 +460,11 @@ body{
 
 <div class="side-nav">
     <div class="dot active" data-i="0"><span class="tip">封面</span></div>
-  <div class="dot" data-i="1"><span class="tip">档案 · 许愿</span></div>
-  <div class="dot" data-i="2"><span class="tip">风格 · 谱系</span></div>
-  <div class="dot" data-i="3"><span class="tip">看向我</span></div>
-  <div class="dot" data-i="4"><span class="tip">卡类收录</span></div>
-  <div class="dot" data-i="5"><span class="tip">话术</span></div>
-  <div class="dot" data-i="6"><span class="tip">板评</span></div>
-  <div class="dot" data-i="7"><span class="tip">冠卡集</span></div>
-  <div class="dot" data-i="8"><span class="tip">特别的礼物</span></div>
-  <div class="dot" data-i="9"><span class="tip">了解更多</span></div>
+    <div class="dot" data-i="1"><span class="tip">档案 · 许愿</span></div>
+    <div class="dot" data-i="2"><span class="tip">风格 · 谱系</span></div>
+    <div class="dot" data-i="3"><span class="tip">看向我</span></div>
+    <div class="dot" data-i="4"><span class="tip">卡片集</span></div>
+    <div class="dot" data-i="5"><span class="tip">了解更多</span></div>
 </div>
 
 <div class="nav-ctrl">
@@ -541,60 +563,61 @@ body{
     <div class="col"><span class="idx">叁</span><h3>依偎我</h3><p>我捂住你的耳朵，只要闭上眼睛额头靠着额头，这个世界就只剩下我们两个了</p><span class="attr">其三 · 终</span></div>
   </div>
   </section><!-- 4 卡类收录  -->
-  <section class="panel" id="cards">
-    <div class="eyebrow">卡片集</div>
-    <h2 class="sec-title">卡类收录</h2>
-    <div class="sec-sub">自介存放处　·　头牌存放处。<br>翻开，看每一张卡最初的模样。</div>
-    <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/ckslYOkht5Q7" target="_blank" rel="noopener">翻开卡类收录 <span class="arrow">→</span></a>
+  <section class="panel" id="catalog">
+    <div class="eyebrow">卡片集 · 许愿的碎念</div>
+    <h2 class="sec-title">收藏夹里，住着许多个我</h2>
+    <div class="sec-sub">轻触任意一栏，展开看详情。</div>
+    <div class="catalog-grid">
+      <div class="col cat" role="button" tabindex="0" aria-expanded="false">
+        <span class="idx">壹</span><h3>卡类收录</h3>
+        <div class="cat-hint">轻触展开 ✦</div>
+        <div class="cat-detail">
+          <p>自介存放处　·　头牌存放处。<br>翻开，看每一张卡最初的模样。</p>
+          <a class="link-btn" href="https://www.kdocs.cn/l/ckslYOkht5Q7" target="_blank" rel="noopener">翻开卡类收录 <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="col cat" role="button" tabindex="0" aria-expanded="false">
+        <span class="idx">贰</span><h3>话术</h3>
+        <div class="cat-hint">轻触展开 ✦</div>
+        <div class="cat-detail">
+          <p>“好安静，我以为我们一直有嘴亲，哦不，有话说。”<br>把想说的话，先在这里排练一遍。</p>
+          <a class="link-btn" href="https://www.kdocs.cn/l/cdcf6wsSShsJ" target="_blank" rel="noopener">翻开话术集 <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="col cat" role="button" tabindex="0" aria-expanded="false">
+        <span class="idx">叁</span><h3>板评</h3>
+        <div class="cat-hint">轻触展开 ✦</div>
+        <div class="cat-detail">
+          <p>守着我的板评过日子。</p>
+          <a class="link-btn" href="https://www.kdocs.cn/l/cooLrnwifpRE" target="_blank" rel="noopener">翻开板评 <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="col cat" role="button" tabindex="0" aria-expanded="false">
+        <span class="idx">肆</span><h3>冠卡集</h3>
+        <div class="cat-hint">轻触展开 ✦</div>
+        <div class="cat-detail">
+          <p>三叶草的另一片叶子，落在你的世界。</p>
+          <a class="link-btn" href="https://www.kdocs.cn/l/cuvVf4kFPDD3" target="_blank" rel="noopener">翻开冠卡集 <span class="arrow">→</span></a>
+        </div>
+      </div>
+      <div class="col cat" role="button" tabindex="0" aria-expanded="false">
+        <span class="idx">伍</span><h3>特别的礼物</h3>
+        <div class="cat-hint">轻触展开 ✦</div>
+        <div class="cat-detail">
+          <p>我细数，我珍重。</p>
+          <a class="link-btn" href="https://www.kdocs.cn/l/cd0EPQN2O27P" target="_blank" rel="noopener">翻开特别的礼物 <span class="arrow">→</span></a>
+        </div>
+      </div>
     </div>
-  </section><!-- 5 话术  -->
-  <section class="panel" id="talk">
-    <div class="eyebrow">卡片集</div>
-    <h2 class="sec-title">话术</h2>
-    <div class="verse">“好安静，我以为我们一直有嘴亲，哦不，有话说。”</div>
-    <div class="sec-sub">把想说的话，先在这里排练一遍。</div>
     <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/cdcf6wsSShsJ" target="_blank" rel="noopener">翻开话术集 <span class="arrow">→</span></a>
+      <a class="link-btn" href="https://www.kdocs.cn/l/cs56nnV0FxxC" target="_blank" rel="noopener">翻开整本卡片集 <span class="arrow">→</span></a>
     </div>
-  </section><!-- 6 板评  -->
-  <section class="panel" id="review">
-    <div class="eyebrow">卡片集</div>
-    <h2 class="sec-title">你 眼中 的 我</h2>
-    <div class="sec-sub">守着我的板评过日子。</div>
-    <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/cooLrnwifpRE" target="_blank" rel="noopener">翻开板评 <span class="arrow">→</span></a>
-    </div>
-  </section><!-- 7 冠卡集  -->
-  <section class="panel" id="crown">
-    <div class="eyebrow">卡片集</div>
-    <h2 class="sec-title">你留给我 的 记忆</h2>
-    <div class="verse">三叶草的另一片叶子，落在你的世界。</div>
-    <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/cuvVf4kFPDD3" target="_blank" rel="noopener">翻开冠卡集 <span class="arrow">→</span></a>
-    </div>
-  </section><!-- 8 特别的礼物  -->
-  <section class="panel" id="gift">
-    <div class="eyebrow">卡片集</div>
-    <h2 class="sec-title">特别的礼物</h2>
-    <div class="sec-sub">我细数，我珍重。</div>
-    <div class="links">
-      <a class="link-btn" href="https://www.kdocs.cn/l/cd0EPQN2O27P" target="_blank" rel="noopener">翻开特别的礼物 <span class="arrow">→</span></a>
-    </div>
-  </section><!-- 9 了解更多  -->
+  </section><!-- 5 了解更多（结尾）  -->
   <section class="panel" id="more">
     <div class="ending-ghost" aria-hidden="true">愿</div>
-    <div class="eyebrow">更多 · 入口</div>
-    <h2 class="sec-title">了解更多</h2>
-    <div class="sec-sub">关于许愿的更多碎念，都收在这本雪做的册子里。</div>
-    <div class="entry-list">
-      <a class="entry" href="https://www.kdocs.cn/l/ckslYOkht5Q7" target="_blank" rel="noopener"><span class="entry-main">卡类收录</span><span class="entry-arrow">前往 ↗</span></a>
-      <a class="entry" href="https://www.kdocs.cn/l/cdcf6wsSShsJ" target="_blank" rel="noopener"><span class="entry-main">话术</span><span class="entry-arrow">前往 ↗</span></a>
-      <a class="entry" href="https://www.kdocs.cn/l/cooLrnwifpRE" target="_blank" rel="noopener"><span class="entry-main">板评</span><span class="entry-arrow">前往 ↗</span></a>
-      <a class="entry" href="https://www.kdocs.cn/l/cuvVf4kFPDD3" target="_blank" rel="noopener"><span class="entry-main">冠卡集</span><span class="entry-arrow">前往 ↗</span></a>
-      <a class="entry" href="https://www.kdocs.cn/l/cd0EPQN2O27P" target="_blank" rel="noopener"><span class="entry-main">特别的礼物</span><span class="entry-arrow">前往 ↗</span></a>
-      <a class="entry" href="https://www.kdocs.cn/l/cs56nnV0FxxC" target="_blank" rel="noopener"><span class="entry-main">卡片集 · 总</span><span class="entry-arrow">前往 ↗</span></a>
-    </div>
+    <div class="eyebrow">更多 · 结尾</div>
+    <h2 class="sec-title">愿落雪成诗，与你共白头</h2>
+    <div class="sec-sub">雪化了是春天，没化完的，是想你。</div>
     <div class="seal">许</div>
     <div class="ending">愿落雪成诗，与你共白头　·　二部虚</div>
     <div class="epigraph-sub" style="margin-top:14px;color:var(--text-faint);">十二无　·　请放心食用</div>
@@ -613,7 +636,7 @@ document.querySelectorAll('.panel').forEach(p=>{
 });
 
 /* 参考站模块划分：每屏统一的 // 0X · 编号 章节头（封面除外） */
-const CH=['封面','档案','风格','靠近','卡类','话术','板评','冠卡','礼物','更多'];
+const CH=['封面','档案','风格','靠近','卡片集','了解更多'];
 document.querySelectorAll('.panel').forEach((p,i)=>{
   if(i===0)return;
   const inner=p.querySelector('.panel-inner');if(!inner)return;
@@ -680,7 +703,7 @@ function show(i){
   i=(i+panels.length)%panels.length;const p=panels[i];
   panels.forEach((s,k)=>s.classList.toggle('active',k===i));
   dots.forEach((d,k)=>d.classList.toggle('active',k===i));
-  chap.textContent=CN[i]+' / '+CN[CN.length-1];
+  chap.textContent=CN[i]+' / '+CN[panels.length-1];
   if(progress)progress.style.width=((i+1)/panels.length*100)+'%';
   // 重新触发进场动画
   p.classList.remove('active');void p.offsetWidth;p.classList.add('active');
@@ -700,6 +723,17 @@ deck.addEventListener('pointerup',e=>{
     show(cur2+1);
   }
 },{passive:true});
+/* 卡片集分栏：点击展开详情（手风琴，同屏只开一个；点链接直接前往不打断） */
+document.querySelectorAll('.col.cat').forEach(col=>{
+  const toggle=()=>{
+    const open=col.classList.contains('open');
+    document.querySelectorAll('.col.cat').forEach(c=>{c.classList.remove('open');c.setAttribute('aria-expanded','false');});
+    if(!open){col.classList.add('open');col.setAttribute('aria-expanded','true');}
+  };
+  col.addEventListener('click',e=>{ if(e.target.closest('a'))return; toggle(); });
+  col.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();} });
+});
+
 show(0);
 
 /* 雪夜实时时钟（参考站 glow-clock 模块，治愈化） */
