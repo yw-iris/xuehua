@@ -412,6 +412,14 @@ body{
   .side-nav .dot::before{content:"";position:absolute;inset:-7px;border-radius:50%;}
   .frame{inset:10px;}
   .aurora-band{opacity:.42;}.stars{opacity:.85;}
+  /* 关闭引发手机端频繁闪动的混合/滤镜动态层 */
+  .edge-blur{display:none!important;}
+  .flow-sheen{display:none!important;}
+  .scanlines{animation:none!important;mix-blend-mode:normal;opacity:.04;}
+  .aurora-band{animation:none!important;}
+  .mist{animation:none!important;}
+  .stars{animation:none!important;}
+  .clock-halo{animation:none!important;}
   .card{padding:28px 22px;}
   .panel{padding:0;touch-action:pan-y;}
   .panel-inner{padding:9vh 7vw 17vh;padding:8dvh 7vw calc(17dvh + env(safe-area-inset-bottom));}
@@ -770,7 +778,6 @@ show(0);
   }
   addEventListener('mousemove',e=>spawn(e.clientX,e.clientY),{passive:true});
   addEventListener('touchstart',e=>{const t=e.touches[0];if(t)spawn(t.clientX,t.clientY);},{passive:true});
-  addEventListener('touchmove',e=>{const t=e.touches[0];if(t)spawn(t.clientX,t.clientY);},{passive:true});
   addEventListener('mouseleave',()=>spot.classList.remove('on'));
   (function sl(){cx+=(tx-cx)*0.12;cy+=(ty-cy)*0.12;
     spot.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)';
