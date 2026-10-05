@@ -80,6 +80,22 @@ body{
 .cursor::after{content:"";position:absolute;top:50%;left:50%;width:3px;height:3px;border-radius:50%;background:rgba(255,255,255,0.95);transform:translate(-50%,-50%);}
 .cursor.big{width:52px;height:52px;border-color:rgba(255,220,196,0.85);background:radial-gradient(circle,rgba(255,220,196,0) 40%,rgba(204,189,242,0.18) 100%);box-shadow:0 0 22px rgba(255,220,196,0.6);}
 
+/* ===== 鼠标水波纹 + 跟随光斑 ===== */
+.spotlight{position:fixed;left:0;top:0;width:460px;height:460px;border-radius:50%;pointer-events:none;z-index:4;
+  transform:translate(-50%,-50%);opacity:0;transition:opacity .7s ease;will-change:transform;
+  background:radial-gradient(circle, rgba(194,216,255,0.13) 0%, rgba(255,220,196,0.05) 40%, transparent 72%);
+  mix-blend-mode:screen;}
+.spotlight.on{opacity:1;}
+.ripple{position:fixed;left:0;top:0;border-radius:50%;pointer-events:none;z-index:6;mix-blend-mode:screen;
+  border:1.5px solid rgba(214,233,255,0.55);
+  box-shadow:0 0 0 9px rgba(194,216,255,0.07),0 0 0 20px rgba(194,216,255,0.035);
+  opacity:0;animation:ripple-out 1.15s cubic-bezier(.18,.7,.3,1) forwards;}
+@keyframes ripple-out{
+  0%{opacity:0.5;transform:translate(-50%,-50%) scale(0.12);}
+  55%{opacity:0.24;}
+  100%{opacity:0;transform:translate(-50%,-50%) scale(1.5);}
+}
+
 /* ===== 音乐控制 ===== */
 .music{position:fixed;right:26px;bottom:26px;z-index:70;display:flex;align-items:center;gap:10px;padding:9px 14px;border-radius:30px;
   background:var(--panel);border:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -132,7 +148,7 @@ body{
 /* 封面 */
 #cover .title{font-family:var(--font-display);font-weight:400;font-size:clamp(40px,8.4vw,88px);letter-spacing:.14em;
   background:linear-gradient(180deg,#ffffff 0%,var(--accent) 52%,var(--accent-soft) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
-  text-shadow:0 0 44px rgba(194,216,255,0.22);animation:breathe-soft 7s ease-in-out infinite;}
+  text-shadow:0 0 30px rgba(194,216,255,0.30),0 0 66px rgba(204,189,242,0.18);animation:breathe-soft 7s ease-in-out infinite;}
 @keyframes breathe-soft{0%,100%{filter:brightness(1);}50%{filter:brightness(1.12);}}
 #cover .epigraph{margin-top:30px;font-family:var(--font-serif);font-size:clamp(16px,2.2vw,21px);color:var(--accent-warm);letter-spacing:.2em;}
 #cover .epigraph-en{margin-top:18px;font-family:var(--font-sans);font-size:12.5px;letter-spacing:.42em;color:var(--text-faint);text-transform:lowercase;}
@@ -146,6 +162,11 @@ body{
   padding:38px 40px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   box-shadow:0 22px 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06);position:relative;overflow:hidden;}
 .card::before{content:"";position:absolute;top:-40%;left:-10%;width:60%;height:80%;background:radial-gradient(circle,rgba(194,216,255,0.10),transparent 70%);pointer-events:none;}
+.card::after{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(194,216,255,0.45),rgba(255,220,196,0.12) 48%,rgba(204,189,242,0.4));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:.45;transition:opacity .5s;}
+.card:hover::after{opacity:.9;}
 .card .name{font-family:var(--font-serif);font-size:30px;color:#fff;letter-spacing:.12em;margin-bottom:8px;}
 .card .tagline{color:var(--accent-warm);font-size:13.5px;letter-spacing:.22em;margin-bottom:26px;font-family:var(--font-sans);}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px 28px;text-align:left;}
@@ -170,17 +191,27 @@ body{
 .trio .col{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:32px 26px;
   backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:transform .4s ease,box-shadow .4s ease,border-color .4s ease;}
 .trio .col:hover{transform:translateY(-6px);border-color:rgba(255,220,196,0.3);box-shadow:0 18px 44px rgba(0,0,0,0.4);}
+.trio .col::after{content:"";position:absolute;inset:0;border-radius:18px;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(194,216,255,0.4),rgba(255,220,196,0.1) 50%,rgba(204,189,242,0.35));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .45s;}
+.trio .col:hover::after{opacity:.85;}
 .trio .col h3{font-family:var(--font-serif);font-size:21px;color:#fff;letter-spacing:.12em;margin-bottom:16px;}
 .trio .col p{color:var(--text-dim);font-size:14px;line-height:2;font-family:var(--font-serif);}
 
 /* 更多入口 */
 .links{margin-top:34px;display:flex;flex-direction:column;gap:18px;align-items:center;}
-.link-btn{display:inline-flex;align-items:center;gap:12px;padding:14px 32px;border-radius:40px;border:1px solid var(--border);
+.link-btn{position:relative;display:inline-flex;align-items:center;gap:12px;padding:14px 32px;border-radius:40px;border:1px solid var(--border);
   background:rgba(194,216,255,0.07);color:var(--text);font-size:15px;letter-spacing:.08em;text-decoration:none;font-family:var(--font-sans);
   transition:all .4s cubic-bezier(.16,1,.3,1);}
 .link-btn:hover{background:rgba(255,220,196,0.14);border-color:rgba(255,220,196,0.45);transform:translateY(-3px);box-shadow:0 12px 34px rgba(255,220,196,0.16);color:#fff;}
 .link-btn .arrow{color:var(--accent);transition:transform .4s ease;}
 .link-btn:hover .arrow{transform:translateX(5px);}
+.link-btn::after{content:"";position:absolute;inset:0;border-radius:40px;padding:1px;pointer-events:none;
+  background:linear-gradient(120deg,rgba(194,216,255,0.5),rgba(255,220,196,0.16),rgba(204,189,242,0.45));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;
+  opacity:0;transition:opacity .45s;}
+.link-btn:hover::after{opacity:.9;}
 .seal{margin-top:38px;width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,220,196,0.4);display:flex;align-items:center;justify-content:center;
   font-family:var(--font-serif);font-size:24px;color:var(--accent-warm);background:rgba(255,220,196,0.06);letter-spacing:0;}
 .ending{margin-top:22px;color:var(--text-faint);font-family:var(--font-serif);font-size:13.5px;letter-spacing:.34em;}
@@ -217,6 +248,7 @@ body{
   .bg-gradient,.leaks{animation:none!important;}.panel{transition:none!important;}
   #snow{display:none;}
   .panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote{opacity:1!important;}
+  .ripple,.spotlight{display:none!important;}
 }
 </style>
 </head>
@@ -433,6 +465,32 @@ deck.addEventListener('touchend',e=>{
   if(Math.abs(dx)<10 && Math.abs(dy)<10 && !e.target.closest('a')){ show(cur2+1); }
 },{passive:true});
 show(0);
+
+/* ===== 鼠标水波纹 + 跟随光斑 ===== */
+(function(){
+  if(REDUCE) return;
+  const coarse=window.matchMedia('(hover:none),(pointer:coarse)').matches;
+  if(coarse) return;
+  const spot=document.createElement('div');spot.className='spotlight';document.body.appendChild(spot);
+  let tx=innerWidth/2,ty=innerHeight/2,cx=tx,cy=ty,lastR=0;
+  addEventListener('mousemove',e=>{
+    tx=e.clientX;ty=e.clientY;spot.classList.add('on');
+    const now=performance.now();
+    if(now-lastR<120)return;
+    lastR=now;
+    if(document.querySelectorAll('.ripple').length>=16)return;
+    const r=document.createElement('div');r.className='ripple';
+    const s=62+Math.random()*46;
+    r.style.width=s+'px';r.style.height=s+'px';
+    r.style.left=e.clientX+'px';r.style.top=e.clientY+'px';
+    document.body.appendChild(r);
+    setTimeout(()=>r.remove(),1200);
+  },{passive:true});
+  addEventListener('mouseleave',()=>spot.classList.remove('on'));
+  (function sl(){cx+=(tx-cx)*0.12;cy+=(ty-cy)*0.12;
+    spot.style.transform='translate('+cx+'px,'+cy+'px) translate(-50%,-50%)';
+    requestAnimationFrame(sl);})();
+})();
 
 /* ===== 内置 BGM ===== */
 let actx=null,master=null,started=false,playing=true,lvl=0.26;
