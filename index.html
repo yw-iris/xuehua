@@ -187,10 +187,10 @@ body{
 
 @media(max-width:680px){
   .grid{grid-template-columns:1fr;}.trio{grid-template-columns:1fr;}
-  .side-nav{right:auto;left:50%;top:auto;bottom:78px;transform:translateX(-50%);flex-direction:row;gap:15px;}
+  .side-nav{right:auto;left:50%;top:auto;bottom:78px;transform:translateX(-50%);flex-direction:row;gap:9px;max-width:92vw;}
   .side-nav .dot .tip{display:none;}
-  .side-nav .dot{width:9px;height:9px;}
-  .side-nav .dot::before{content:"";position:absolute;inset:-9px;border-radius:50%;}
+  .side-nav .dot{width:7px;height:7px;}
+  .side-nav .dot::before{content:"";position:absolute;inset:-7px;border-radius:50%;}
   .frame{inset:10px;}
   .card{padding:28px 22px;}
   .panel{padding:10vh 7vw 16vh;touch-action:pan-y;}
@@ -236,11 +236,16 @@ body{
   <div class="dot" data-i="2"><span class="tip">风格 · 谱系</span></div>
   <div class="dot" data-i="3"><span class="tip">看向我</span></div>
   <div class="dot" data-i="4"><span class="tip">了解更多</span></div>
+  <div class="dot" data-i="5"><span class="tip">卡类收录</span></div>
+  <div class="dot" data-i="6"><span class="tip">话术</span></div>
+  <div class="dot" data-i="7"><span class="tip">板评</span></div>
+  <div class="dot" data-i="8"><span class="tip">冠卡集</span></div>
+  <div class="dot" data-i="9"><span class="tip">特别的礼物</span></div>
 </div>
 
 <div class="nav-ctrl">
   <button class="navbtn" id="prev" aria-label="上一页">‹</button>
-  <span class="chap" id="chap">一 / 五</span>
+  <span class="chap" id="chap">一 / 十</span>
   <button class="navbtn" id="next" aria-label="下一页">›</button>
 </div>
 
@@ -327,6 +332,57 @@ body{
     <div class="ending">愿落雪成诗，与你共白头　·　二部虚</div>
     <div class="epigraph-sub" style="margin-top:14px;color:var(--text-faint);">十二无　·　请放心食用</div>
   </section>
+
+  <!-- 5 卡类收录 -->
+  <section class="panel" id="cards">
+    <div class="eyebrow">卡片集</div>
+    <h2 class="sec-title">卡类收录</h2>
+    <div class="sec-sub">自介存放处　·　头牌存放处。<br>翻开，看每一张卡最初的模样。</div>
+    <div class="links">
+      <a class="link-btn" href="https://www.kdocs.cn/l/ckslYOkht5Q7" target="_blank" rel="noopener">翻开卡类收录 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 6 话术 -->
+  <section class="panel" id="talk">
+    <div class="eyebrow">卡片集</div>
+    <h2 class="sec-title">话术</h2>
+    <div class="verse">“好安静，我以为我们一直有嘴亲，哦不，有话说。”</div>
+    <div class="sec-sub">把想说的话，先在这里排练一遍。</div>
+    <div class="links">
+      <a class="link-btn" href="https://www.kdocs.cn/l/cdcf6wsSShsJ" target="_blank" rel="noopener">翻开话术集 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 7 板评 -->
+  <section class="panel" id="review">
+    <div class="eyebrow">卡片集</div>
+    <h2 class="sec-title">你 眼中 的 我</h2>
+    <div class="sec-sub">守着我的板评过日子。</div>
+    <div class="links">
+      <a class="link-btn" href="https://www.kdocs.cn/l/cooLrnwifpRE" target="_blank" rel="noopener">翻开板评 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 8 冠卡集 -->
+  <section class="panel" id="crown">
+    <div class="eyebrow">卡片集</div>
+    <h2 class="sec-title">你留给我 的 记忆</h2>
+    <div class="verse">三叶草的另一片叶子，落在你的世界。</div>
+    <div class="links">
+      <a class="link-btn" href="https://www.kdocs.cn/l/cuvVf4kFPDD3" target="_blank" rel="noopener">翻开冠卡集 <span class="arrow">→</span></a>
+    </div>
+  </section>
+
+  <!-- 9 特别的礼物 -->
+  <section class="panel" id="gift">
+    <div class="eyebrow">卡片集</div>
+    <h2 class="sec-title">特别的礼物</h2>
+    <div class="sec-sub">我细数，我珍重。</div>
+    <div class="links">
+      <a class="link-btn" href="https://www.kdocs.cn/l/cd0EPQN2O27P" target="_blank" rel="noopener">翻开特别的礼物 <span class="arrow">→</span></a>
+    </div>
+  </section>
 </div>
 
 <script>
@@ -370,13 +426,13 @@ addEventListener('mouseout',e=>{if(e.target.closest('a,.btn,.dot,.tag,.link-btn,
 const panels=[...document.querySelectorAll('.panel')];
 const dots=[...document.querySelectorAll('.side-nav .dot')];
 const chap=document.getElementById('chap');
-const CN=['一','二','三','四','五'];
+const CN=['一','二','三','四','五','六','七','八','九','十'];
 let cur2=0;
 function show(i){
   i=(i+panels.length)%panels.length;const p=panels[i];
   panels.forEach((s,k)=>s.classList.toggle('active',k===i));
   dots.forEach((d,k)=>d.classList.toggle('active',k===i));
-  chap.textContent=CN[i]+' / 五';
+  chap.textContent=CN[i]+' / '+CN[CN.length-1];
   // 重新触发进场动画
   p.classList.remove('active');void p.offsetWidth;p.classList.add('active');
   cur2=i;
