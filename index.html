@@ -412,14 +412,18 @@ body{
   .side-nav .dot::before{content:"";position:absolute;inset:-7px;border-radius:50%;}
   .frame{inset:10px;}
   .aurora-band{opacity:.42;}.stars{opacity:.85;}
-  /* 关闭引发手机端频繁闪动的混合/滤镜动态层 */
+  /* 关闭引发手机端频繁闪动的混合/滤镜动态层：移除全屏 mix-blend-mode（叠加在落雪 canvas 上会每帧重合成）+ 停掉全屏动画 */
   .edge-blur{display:none!important;}
   .flow-sheen{display:none!important;}
   .scanlines{animation:none!important;mix-blend-mode:normal;opacity:.04;}
-  .aurora-band{animation:none!important;}
-  .mist{animation:none!important;}
+  .aurora-band{animation:none!important;mix-blend-mode:normal;}
+  .mist{animation:none!important;mix-blend-mode:normal;}
+  .leaks{animation:none!important;mix-blend-mode:normal;}
+  .bg-gradient{animation:none!important;}
   .stars{animation:none!important;}
   .clock-halo{animation:none!important;}
+  .grain{mix-blend-mode:normal;}
+  .ripple,.spotlight{mix-blend-mode:normal;}
   .card{padding:28px 22px;}
   .panel{padding:0;touch-action:pan-y;}
   .panel-inner{padding:9vh 7vw 17vh;padding:8dvh 7vw calc(17dvh + env(safe-area-inset-bottom));}
