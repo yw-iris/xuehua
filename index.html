@@ -265,6 +265,48 @@ body{
 .clock{position:fixed;left:18px;top:16px;z-index:60;font-family:var(--font-sans);font-size:13px;letter-spacing:.14em;color:var(--text-faint);opacity:.72;pointer-events:none;text-shadow:0 0 10px rgba(194,216,255,.2);}
 .clock .c-label{display:block;font-size:9px;letter-spacing:.34em;opacity:.65;margin-bottom:2px;}
 
+/* —— 参考站标志性模块（治愈化 · 去故障风） —— */
+/* 封面档案标签：借参考站 cover-label */
+.filetag{display:inline-block;margin-bottom:18px;padding:6px 16px;border-radius:30px;
+  border:1px solid rgba(194,216,255,0.3);background:rgba(194,216,255,0.05);
+  font-family:var(--font-sans);font-size:10px;letter-spacing:.34em;color:var(--text-faint);opacity:.82;}
+
+/* FILE:// 结构化档案读出块：借参考站 // 01 · ME 终端块，化故障为柔光 */
+.filebox{margin-top:30px;width:100%;max-width:420px;text-align:left;padding:20px 24px;border-radius:16px;
+  border:1px solid rgba(194,216,255,0.18);border-left:2px solid var(--accent-soft);
+  background:rgba(20,30,52,0.32);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  font-family:var(--font-sans);font-size:13px;letter-spacing:.04em;color:var(--text-dim);
+  box-shadow:inset 0 0 26px rgba(194,216,255,0.06);}
+.filebox .fb-head{color:var(--accent);font-size:12px;letter-spacing:.18em;margin-bottom:12px;opacity:.92;}
+.filebox .dim{color:var(--text-faint);opacity:.7;margin-right:4px;}
+.filebox .fb-row{display:flex;gap:14px;padding:5px 0;border-top:1px solid rgba(255,255,255,0.05);}
+.filebox .fk{color:var(--text-faint);min-width:54px;opacity:.7;}
+.filebox .fv{color:#eef4ff;}
+.filebox .fv.on{color:var(--accent-soft);}
+.filebox .blink{animation:blink 1.1s steps(1) infinite;}
+@keyframes blink{50%{opacity:0;}}
+
+/* 雪夜批注盒：借参考站 error-box，化报错为温柔批注 */
+.notebox{margin-top:26px;width:100%;max-width:520px;text-align:left;padding:18px 22px;border-radius:14px;
+  border:1px solid rgba(255,220,196,0.22);background:rgba(255,220,196,0.04);
+  font-family:var(--font-serif);font-size:14px;line-height:1.95;color:var(--text-dim);}
+.notebox .nb-tag{display:inline-block;margin-bottom:8px;font-family:var(--font-sans);font-size:10px;letter-spacing:.3em;color:var(--accent-warm);opacity:.85;}
+.notebox p{margin:0;}
+
+/* 风格页编号注记：借参考站 01/02/03 note */
+.notes{margin-top:28px;width:100%;max-width:560px;display:flex;flex-direction:column;gap:12px;text-align:left;}
+.notes .note{display:flex;gap:14px;align-items:flex-start;}
+.notes .note .idx{font-family:var(--font-sans);font-size:12px;color:var(--accent-soft);min-width:22px;opacity:.8;padding-top:2px;}
+.notes .note .txt{font-family:var(--font-serif);font-size:13.5px;line-height:1.9;color:var(--text-dim);}
+
+/* 三栏序/中/终落款：借参考站 CREED pullquote attr */
+.trio .col .attr{display:block;margin-top:14px;font-family:var(--font-sans);font-size:10px;letter-spacing:.28em;color:var(--text-faint);opacity:.7;}
+
+/* 结尾幽灵字：借参考站 ending-ghost */
+.ending-ghost{position:absolute;left:50%;top:40%;transform:translate(-50%,-50%);z-index:0;
+  font-family:var(--font-display);font-size:clamp(160px,38vh,400px);line-height:1;color:rgba(255,255,255,0.04);pointer-events:none;user-select:none;}
+#more .panel-inner{position:relative;z-index:1;}
+
 /* 互动三栏 */
 .trio{margin-top:40px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;max-width:880px;width:100%;}
 .trio .col{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:32px 26px;
@@ -386,6 +428,7 @@ body{
 <div id="deck">
   <!-- 0 封面  -->
   <section class="panel active" id="cover">
+    <div class="filetag">角色档案 · CHARACTER FILE</div>
     <div class="eyebrow">二部 · 虚</div>
     <h1 class="title">哪一片雪花是你</h1>
     <div class="epigraph-en">lullaby for you</div>
@@ -415,6 +458,19 @@ body{
       <p>“好安静，我以为我们一直有嘴亲，哦不，有话说。”</p>
       <div class="src">—— 摘自卡片集 · 话术</div>
     </div>
+    <div class="filebox">
+      <div class="fb-head"><span class="dim">FILE://</span> 个人档案 · 许愿</div>
+      <div class="fb-row"><span class="fk">ID</span><span class="fv">许愿</span></div>
+      <div class="fb-row"><span class="fk">编号</span><span class="fv">二部 · 虚</span></div>
+      <div class="fb-row"><span class="fk">星座</span><span class="fv">天秤 Libra</span></div>
+      <div class="fb-row"><span class="fk">人格</span><span class="fv">ISTJ</span></div>
+      <div class="fb-row"><span class="fk">常在</span><span class="fv">素雪 · 雾山影</span></div>
+      <div class="fb-row"><span class="fk">STATUS</span><span class="fv on">在线 <span class="blink">_</span></span></div>
+    </div>
+    <div class="notebox">
+      <span class="nb-tag">雪夜 · 批注</span>
+      <p>这是一份只写了关键字段的档案。编号二部虚，名字只取一个字：许愿。表格之外的部分，写在后面的风格谱系，与三种靠近里。</p>
+    </div>
   </section><!-- 2 风格  -->
   <section class="panel" id="style">
     <div class="eyebrow">风格 · 谱系</div>
@@ -434,15 +490,20 @@ body{
       </div>
     </div>
     <div class="style-note">我像初雪，落在哪里都小心翼翼。<br>可我愿一直陪你，走到雪停，走到你肯收下我的那刻。</div>
+    <div class="notes">
+      <div class="note"><span class="idx">01</span><span class="txt">我的恋感，会随你的回应轻轻改变。</span></div>
+      <div class="note"><span class="idx">02</span><span class="txt">不论单内单外，我都会在意你。</span></div>
+      <div class="note"><span class="idx">03</span><span class="txt">风格仅为参考，单场未必全都包含。</span></div>
+    </div>
   </section><!-- 3 互动  -->
   <section class="panel" id="meet">
     <div class="eyebrow">接纳我 · 珍藏我 · 依偎我</div>
     <h2 class="sec-title">三种，靠近我的方式</h2>
     <div class="verse">如果你怕黑，我把自已落成漫天星子</div>
   <div class="trio">
-    <div class="col"><span class="idx">壹</span><h3>接纳我</h3><p>没关系的，你怎么样都没关系，想躲起来也没关系，不想面对也没关系</p></div>
-    <div class="col"><span class="idx">贰</span><h3>珍藏我</h3><p>脏脏的旧旧的也没关系，碎掉了也没关系，我把你藏起来，我把你裹起来，我把你擦干净，我把你拼起来</p></div>
-    <div class="col"><span class="idx">叁</span><h3>依偎我</h3><p>我捂住你的耳朵，只要闭上眼睛额头靠着额头，这个世界就只剩下我们两个了</p></div>
+    <div class="col"><span class="idx">壹</span><h3>接纳我</h3><p>没关系的，你怎么样都没关系，想躲起来也没关系，不想面对也没关系</p><span class="attr">其一 · 序</span></div>
+    <div class="col"><span class="idx">贰</span><h3>珍藏我</h3><p>脏脏的旧旧的也没关系，碎掉了也没关系，我把你藏起来，我把你裹起来，我把你擦干净，我把你拼起来</p><span class="attr">其二 · 中</span></div>
+    <div class="col"><span class="idx">叁</span><h3>依偎我</h3><p>我捂住你的耳朵，只要闭上眼睛额头靠着额头，这个世界就只剩下我们两个了</p><span class="attr">其三 · 终</span></div>
   </div>
   </section><!-- 4 卡类收录  -->
   <section class="panel" id="cards">
@@ -487,6 +548,7 @@ body{
     </div>
   </section><!-- 9 了解更多  -->
   <section class="panel" id="more">
+    <div class="ending-ghost" aria-hidden="true">愿</div>
     <div class="eyebrow">更多 · 入口</div>
     <h2 class="sec-title">了解更多</h2>
     <div class="sec-sub">关于许愿的更多碎念，都收在这本雪做的册子里。</div>
