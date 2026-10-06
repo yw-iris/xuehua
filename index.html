@@ -167,8 +167,10 @@ body{
 .verse::before{content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:1px;background:linear-gradient(90deg,transparent,var(--accent-soft),transparent);}
 /* 雪夜絮语：每句独立成行、以小霜点为间隔，留白呼吸 */
 .whispers{margin-top:30px;display:flex;flex-direction:column;align-items:center;max-width:660px;width:100%;}
-.whisper{font-family:var(--font-kai);font-size:clamp(14px,1.7vw,16.5px);color:var(--text);line-height:1.95;letter-spacing:.05em;opacity:.94;max-width:600px;}
-.whisper + .whisper::before{content:"";display:block;width:5px;height:5px;margin:15px auto;border-radius:50%;background:radial-gradient(circle,rgba(204,189,242,.9),transparent 70%);}
+.whisper{font-family:var(--font-display);font-size:clamp(17px,2.1vw,20px);line-height:2.05;letter-spacing:.06em;opacity:.96;max-width:620px;
+  color:transparent;background:linear-gradient(180deg,#f4f8ff 0%,#e0ebff 52%,#d6c7f5 100%);-webkit-background-clip:text;background-clip:text;
+  filter:drop-shadow(0 0 14px rgba(198,218,255,.3));}
+.whisper + .whisper::before{content:"";display:block;width:6px;height:6px;margin:16px auto;border-radius:50%;background:radial-gradient(circle,rgba(214,199,245,.95),transparent 68%);box-shadow:0 0 10px rgba(204,189,242,.5);}
 .panel .ch-num,.panel .eyebrow,.panel .sec-title,.panel .sec-sub,.panel .verse,.panel .card,.panel .tags,.panel .style-note,.panel .trio,.panel .links,.panel .seal,.panel .ending,.panel .epigraph,.panel .epigraph-sub,.panel .scroll-hint,.panel .quote,.panel .whispers{opacity:0;}
 .panel.active .eyebrow{animation:fadeUp 1s ease .15s both;}
 .panel.active .ch-num{animation:fadeUp 1s ease .05s both;}
